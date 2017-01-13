@@ -1,0 +1,21 @@
+.todo-item {
+  margin-left: 0rem;
+}
+
+.todo-content {
+  cursor: pointer;
+}
+
+.todo-item > .completed {
+  text-decoration:line-through;
+}
+
+.todo-input {
+  margin-left: 10px;
+  margin-bottom: 20px;
+}
+
+.delete-todo-handle {
+  cursor: pointer;
+}
+
