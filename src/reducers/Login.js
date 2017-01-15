@@ -22,8 +22,16 @@ function login(prevState, action) {
   return prevState;
 }
 
+function logout(prevState, action) {
+  let redirectURL = action.redirectURL;
+  prevState.user = null;
+  prevState.sys.url = redirectURL;
+  return prevState;
+}
+
 export default function register(app) {
   app.store.reduce('LOGIN_EMAIL_CHANGED', emailChanged);
   app.store.reduce('LOGIN_PASSWORD_CHANGED', passwordChanged);
   app.store.reduce('LOGIN', login);
+  app.store.reduce('LOGOUT', logout);
 }

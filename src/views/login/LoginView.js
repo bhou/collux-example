@@ -29,12 +29,12 @@ class LoginView extends React.Component {
     )
   }
 
-
   render() {
     return (
       <div className="container">
 
         <form className="form-signin">
+          <this.app.Link to="/">Home</this.app.Link>
           <h2 className="form-signin-heading">Please sign in</h2>
           <label className="sr-only">Email address</label>
           <input onChange={this.onEmailChange.bind(this)} type="email" id="inputEmail" className="form-control" placeholder="Email address" />
@@ -42,7 +42,9 @@ class LoginView extends React.Component {
           <input onChange={this.onPasswordChange.bind(this)} type="password" id="inputPassword" className="form-control" placeholder="Password" />
           
           <a onClick={this.onLogin.bind(this)} className="btn btn-lg btn-primary btn-block" >Sign in</a>
+          
         </form>
+        
 
       </div>
     )

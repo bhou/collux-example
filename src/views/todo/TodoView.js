@@ -47,7 +47,8 @@ class TodoView extends React.Component {
     this.app = this.props.app;
     this.state = {
       todos: [],
-      newTodo: ''
+      newTodo: '',
+      user: null
     }
   }
 
@@ -71,7 +72,7 @@ class TodoView extends React.Component {
 
     return (
       <div>
-        <Navbar app={this.app} active="todo"/>
+        <Navbar app={this.app} active="todo" user={this.state.user}/>
         <div className="container">
           <div className="jumbotron">
             <h1>Todo List</h1>

@@ -38,6 +38,12 @@ export default {
     }
   },
 
+  LOGOUT: () => {
+    return {
+      actionType: 'LOGOUT'
+    }
+  },
+
   TODO_TOGGLE_COMPLETE: (id) => {
     return {
       actionType: 'TODO_TOGGLE_COMPLETE',
@@ -63,5 +69,7 @@ export default {
     return {
       actionType: 'TODO_CREATE'
     }
-  }
+  },
+
+
 }

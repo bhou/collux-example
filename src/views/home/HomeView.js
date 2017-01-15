@@ -6,12 +6,15 @@ class HomeView extends React.Component {
   constructor(props) {
     super(props);
     this.app = this.props.app;
+    this.state = {
+      user: null
+    }
   }
 
   render() {
     return (
       <div>
-        <Navbar app={this.app} active="home"/>
+        <Navbar app={this.app} active="home" user={this.state.user}/>
         <div className="container">
           <div className="jumbotron">
             <h1>Home Page</h1>

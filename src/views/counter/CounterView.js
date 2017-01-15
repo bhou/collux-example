@@ -9,31 +9,32 @@ class CounterView extends React.Component {
     this.app = this.props.app;
 
     this.state = {
-      value: 0
+      value: 0,
+      user: null
     }
   }
 
   onIncrement() {
     this.app.getViewSensor().send(
       Actions.INCREMENT()
-    )
+    , false)
   }
 
   onDecrement() {
     this.app.getViewSensor().send(
       Actions.DECREMENT()
-    )
+    , false)
   }
 
 
   render() {
     return (
       <div>
-        <Navbar app={this.app} active="counter"/>
+        <Navbar app={this.app} active="counter" user={this.state.user}/>
         <div className="container">
           <div className="jumbotron">
             <h1>Counter</h1>
-            <p className="lead">{this.state.value}</p>
+            <h2>{this.state.value}</h2>
             <button onClick={this.onIncrement.bind(this)}>+</button>
             <button onClick={this.onDecrement.bind(this)}>-</button>
           </div>

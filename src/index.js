@@ -60,28 +60,54 @@ app.route('/', {
     );
   },
   updateState: (state) => {
-
+    homeView.setState({
+      user: state.user
+    });
   }
 });
 
 app.route('/counter', {
-  render: () => {
+  render: (state) => {
+    if (!state.user) {
+      app.redirect('/login?relay=counter');
+      return;
+    }
     counterView = ReactDOM.render(
       <CounterView app={app}/>,
       document.getElementById('root')
     );
   },
   updateState: (state) => {
-    if (!state.user) { // user not login, resend to /login page
-      app.getViewSensor().send(
-        Actions.RENDER('/login?relay=counter')
-      )
-    }
+    if (!counterView) return;
     counterView.setState({
-      value: state.counter
+      value: state.counter,
+      user: state.user
     });
   }
 });
+
+app.route('/todo', {
+  render: (state) => {
+    if (!state.user) { // user not login, resend to /login page
+      app.redirect('/login?relay=todo')
+      return;
+    }
+
+    todoView = ReactDOM.render(
+      <TodoView app={app}/>,
+      document.getElementById('root')
+    );
+  },
+  updateState: (state) => {
+    if (!todoView) return;
+    todoView.setState({
+      todos: state.todos,
+      newTodo: state.newTodo,
+      user: state.user
+    })
+  }
+});
+
 
 app.route('/login', {
   render: () => {
@@ -93,45 +119,34 @@ app.route('/login', {
   updateState: (state) => {
     if (state.user) {
       // get route object
-      let route = state.route;
+      let parsedURL = state.sys.parsedURL;
       let redirectUrl = '/';
       
-      if (route && route.query.hasOwnProperty('relay')) {
-        let relay = route.query.relay;
+      if (parsedURL && parsedURL.query.hasOwnProperty('relay')) {
+        let relay = parsedURL.query.relay;
         switch(relay) {
           case 'counter':
             redirectUrl = '/counter';
+            break;
+          case 'todo':
+            redirectUrl = '/todo';
             break;
           default:
             redirectUrl = '/';
         }
       }
-      app.getViewSensor().send(
-        Actions.RENDER(redirectUrl)
-      )
+      app.redirect(redirectUrl);
     }
   }
 });
 
-app.route('/todo', {
-  render: () => {
-    todoView = ReactDOM.render(
-      <TodoView app={app}/>,
-      document.getElementById('root')
-    );
-  },
-  updateState: (state) => {
-    todoView.setState({
-      todos: state.todos,
-      newTodo: state.newTodo
-    })
-  }
-});
 
 // register reducers
 CounterReducer(app);
 LoginReducer(app);
 TodoReducer(app);
 
+// set the root path
+app.view.setRootPath('/collux-example');
 
 app.run();
